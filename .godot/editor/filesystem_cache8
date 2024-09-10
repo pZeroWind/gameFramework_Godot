@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1725986819
+icon.svg::CompressedTexture2D::1546419238906109918::1722359178::1725290721::1::::<><>::
+::res://framework/::1725977195
+::res://framework/runtime/::1725895918
+::res://framework/states/::1725896758
+StateMachine.cs::CSharpScript::-1::1725984728::0::1::::<>Node<>::
+StateObject.cs::CSharpScript::-1::1725982659::0::1::::<><>::
+::res://framework/units/::1725977209
+UnitNode.cs::CSharpScript::-1::1725984072::0::1::::<>CharacterBody2D<>::
+::res://resources/::1725895475
+::res://resources/sprites/::1725895468
+::res://scenes/::1725984716
+entryScene.tscn::PackedScene::995326399101208018::1725984716::0::1::::<><>::
+testScene.tscn::PackedScene::7979049558111650481::1725984716::0::1::::<><>::res://framework/units/UnitNode.cs<>uid://wbdkftfccw1c::::res://icon.svg<>res://framework/states/StateMachine.cs
+::res://scripts/::1725895893
