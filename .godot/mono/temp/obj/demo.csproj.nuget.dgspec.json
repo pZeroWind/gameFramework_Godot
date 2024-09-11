@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\project\\godot\\demo.csproj": {}
+    "D:\\project\\arpgDemo\\demo.csproj": {}
   },
   "projects": {
-    "D:\\project\\godot\\demo.csproj": {
+    "D:\\project\\arpgDemo\\demo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\project\\godot\\demo.csproj",
+        "projectUniqueName": "D:\\project\\arpgDemo\\demo.csproj",
         "projectName": "demo",
-        "projectPath": "D:\\project\\godot\\demo.csproj",
+        "projectPath": "D:\\project\\arpgDemo\\demo.csproj",
         "packagesPath": "C:\\Users\\pzw\\.nuget\\packages\\",
-        "outputPath": "D:\\project\\godot\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "D:\\project\\arpgDemo\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\soft\\program\\VSSDK\\NuGetPackages"

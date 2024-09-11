@@ -94,11 +94,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PROJECT\\GODOT\\demo.csproj",
+      "projectUniqueName": "D:\\project\\arpgDemo\\demo.csproj",
       "projectName": "demo",
-      "projectPath": "D:\\PROJECT\\GODOT\\demo.csproj",
+      "projectPath": "D:\\project\\arpgDemo\\demo.csproj",
       "packagesPath": "C:\\Users\\pzw\\.nuget\\packages\\",
-      "outputPath": "D:\\PROJECT\\GODOT\\.godot\\mono\\temp\\obj\\",
+      "outputPath": "D:\\project\\arpgDemo\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\soft\\program\\VSSDK\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rzB3cxC4YK8=",
+  "dgSpecHash": "88twh2WYBPo=",
   "success": true,
-  "projectFilePath": "D:\\project\\godot\\demo.csproj",
+  "projectFilePath": "D:\\project\\arpgDemo\\demo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pzw\\.nuget\\packages\\godot.sourcegenerators\\4.3.0\\godot.sourcegenerators.4.3.0.nupkg.sha512",
     "C:\\Users\\pzw\\.nuget\\packages\\godotsharp\\4.3.0\\godotsharp.4.3.0.nupkg.sha512",
