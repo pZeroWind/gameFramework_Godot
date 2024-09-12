@@ -1,3 +1,4 @@
+res://framework/runtime/units/PlayerNode.cs
 res://framework/runtime/units/UnitNode.cs
 res://framework/states/StateMachine.cs
 res://scenes/entryScene.tscn

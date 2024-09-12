@@ -4,9 +4,9 @@ using Godot;
 
 namespace Framework;
 
-public class InputManager
+public class InputManager : Singleton<InputManager>
 {
-    Dictionary<string, Key> _inputDict;
+    private Dictionary<string, Key> _inputDict;
 
     public InputManager()
     {

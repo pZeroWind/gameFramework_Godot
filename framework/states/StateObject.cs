@@ -77,6 +77,9 @@ namespace Framework
 
 		public virtual void OnExit(UnitNode node) { }
 
+		/// <summary>
+		///  添加可转移状态
+		/// </summary>
 		protected void AddCanToState(State key, Func<bool> condition)
 		{
 			if (!_canToState.ContainsKey(key))
