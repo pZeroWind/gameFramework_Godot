@@ -4,7 +4,7 @@ namespace Framework;
 
 public class GlobalManager : Singleton<GlobalManager>
 {
-    public PropertyManager PropertyManager;
+    public readonly PropertyManager PropertyManager;
 
     public GlobalManager()
     {

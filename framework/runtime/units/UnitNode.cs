@@ -45,13 +45,17 @@ public static class UnitPropertyName
     public const string TimeScale = "TimeScale";
 }
 
-public partial class UnitNode : CharacterBody2D
+public abstract partial class UnitNode : CharacterBody2D
 {
-    public PropertyManager PropertyManager { get; set; }
+    public PropertyManager Properties { get; }
+
+    [Export]
+    public string UnitName { get; set; } = "default";
 
     public UnitNode()
     {
-        PropertyManager.SetProperty<float>(UnitPropertyName.TimeScale, 1f);
+        Properties = new();
+        Properties.Set<float>(UnitPropertyName.TimeScale, 1f);
     }
 
     

@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using Godot;
 
 namespace Framework;
 
 public interface ITValue
 {
+
     void SetValue<T>(T value);
 
     T GetValue<T>();
@@ -27,12 +30,15 @@ public class TValue<T> : ITValue
 
 public sealed class PropertyManager
 {
-    private Dictionary<string, ITValue> _properties = new();
+    private readonly Dictionary<string, ITValue> _properties = [];
+
+    public Dictionary<string, ITValue> GetValues() => _properties;
+
 
     /// <summary>
     /// 获取属性
     /// </summary>
-    public T GetProperty<T>(string key)
+    public T Get<T>(string key)
     {
         if (_properties.ContainsKey(key))
         {
@@ -44,12 +50,17 @@ public sealed class PropertyManager
     /// <summary>
     /// 设置属性
     /// </summary>
-    public void SetProperty<T>(string key, T value)
+    public void Set<T>(string key, T value)
     {
         if (!_properties.ContainsKey(key))
         {
             _properties.Add(key, new TValue<T>());
         }
         _properties[key].SetValue(value);
+    }
+
+    internal void Set<T>(string maxHP, Variant variant)
+    {
+        throw new NotImplementedException();
     }
 }
