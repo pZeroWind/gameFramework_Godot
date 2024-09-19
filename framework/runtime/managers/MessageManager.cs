@@ -20,7 +20,7 @@ public partial class MessageManager : SingletonNode<MessageManager>
     public MessageManager()
     {
         Register("test_evt", msg =>{
-            var p = msg.Value.GetValue<PlayerNode>();
+            var p = msg.Value.As<PlayerNode>();
             p.MoveAndCollide(Vector2.Right * 0.25f);
         });
     }

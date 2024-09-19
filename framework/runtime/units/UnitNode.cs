@@ -47,16 +47,16 @@ public static class UnitPropertyName
 
 public abstract partial class UnitNode : CharacterBody2D
 {
-    public PropertyManager Properties { get; }
+    public PropertyManager Properties { get; } = new();
 
     [Export]
     public string UnitName { get; set; } = "default";
 
-    public UnitNode()
+    public override void _Ready()
     {
-        Properties = new();
-        Properties.Set<float>(UnitPropertyName.TimeScale, 1f);
+        UnitManager.Instance.AddUnit(this);
+        Properties[UnitPropertyName.TimeScale].Val(1f);
     }
 
-    
+
 }

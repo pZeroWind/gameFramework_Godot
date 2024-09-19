@@ -10,6 +10,7 @@ namespace Framework;
 /// </summary>
 public interface IJsonSerializable
 {
+    string FileName { get; }
 
     void Serialize();
 
@@ -23,17 +24,26 @@ public static class JsonHelper
     /// </summary>
     public static string ReadJsonFile(string pathName)
     {
-        if(!Directory.Exists("data")) Directory.CreateDirectory("data");
-        using FileStream fs = new($"data/{pathName}.json", FileMode.OpenOrCreate, System.IO.FileAccess.Read);
-        using BufferedStream bufferedStream = new(fs);
-        // 创建一个字节数组来存储文件内容
-        byte[] bytes = new byte[fs.Length];
+        // if(!Directory.Exists("user://data")) Directory.CreateDirectory("user://data");
+        // using FileStream fs = new($"user://data/{pathName}.json", FileMode.OpenOrCreate, System.IO.FileAccess.Read);
+        // using BufferedStream bufferedStream = new(fs);
+        // // 创建一个字节数组来存储文件内容
+        // byte[] bytes = new byte[fs.Length];
 
-        // 读取文件内容到字节数组
-        int bytesRead = bufferedStream.Read(bytes, 0, bytes.Length);
+        // // 读取文件内容到字节数组
+        // int bytesRead = bufferedStream.Read(bytes, 0, bytes.Length);
 
-        // 将字节数组转换为字符串，文件编码为 UTF-8
-        return Encoding.UTF8.GetString(bytes, 0, bytesRead);
+        // // 将字节数组转换为字符串，文件编码为 UTF-8
+        // return Encoding.UTF8.GetString(bytes, 0, bytesRead);
+        //File file = new File();
+        if (!DirAccess.DirExistsAbsolute("res://data")) DirAccess.MakeDirAbsolute("res://data");
+        if (!Godot.FileAccess.FileExists($"res://data/{pathName}.json"))
+        {
+            using var w = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
+            w.StoreString("{}");
+        }
+        using var fl = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Read);
+        return fl.GetAsText();
     }
 
     /// <summary>
@@ -41,13 +51,19 @@ public static class JsonHelper
     /// </summary>
     public static void WriteJsonFile(string pathName, string content)
     {
-        if(!Directory.Exists("data")) Directory.CreateDirectory("data");
-        using FileStream fs = new($"data/{pathName}.json", FileMode.OpenOrCreate, System.IO.FileAccess.Write);
-        using BufferedStream bufferedStream = new(fs);
-        // 创建一个字节数组来存储文件内容
-        byte[] bytes = Encoding.UTF8.GetBytes(content);
-        // 异步读取文件内容到字节数组
-        bufferedStream.Write(bytes, 0, bytes.Length);
+        
+
+        // if (!Directory.Exists("user://data")) Directory.CreateDirectory("user://data");
+        // using FileStream fs = new($"user://data/{pathName}.json", FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+        // using BufferedStream bufferedStream = new(fs);
+        // // 创建一个字节数组来存储文件内容
+        // byte[] bytes = Encoding.UTF8.GetBytes(content);
+        // // 异步读取文件内容到字节数组
+        // bufferedStream.Write(bytes, 0, bytes.Length);
+        if (!DirAccess.DirExistsAbsolute("res://data")) DirAccess.MakeDirAbsolute("res://data");
+        //if (!Godot.FileAccess.FileExists($"user://data/{pathName}.json")) Godot.FileAccess.new();
+        using var fl = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
+        fl.StoreString(content);
     }
 
     public static Dictionary Deserialize(this string json)

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Framework;
 
-public abstract partial class StateMachine : Node
+public partial class StateMachine : Node
 {
     /// <summary>
     /// 状态字典
     /// </summary>
-    private readonly Dictionary<State, IState> _states = new();
+    private readonly Dictionary<State, IState> _states = [];
 
     /// <summary>
     /// 单位节点
@@ -24,13 +24,14 @@ public abstract partial class StateMachine : Node
     public override void _Ready()
     {
         _owner = GetParent<UnitNode>();
-        OnInitialize();
+        foreach (var node in GetChildren())
+        {
+            if (node is StateNode stateNode)
+                _states.Add(stateNode.State, stateNode);
+        }
+        GD.Print(_states.Count);
+        foreach (var state in _states) GD.Print(state.Key.ToString());
     }
-
-    /// <summary>
-    /// 初始化时调用
-    /// </summary>
-    protected abstract void OnInitialize();
 
     /// <summary>
     /// 注册状态
@@ -46,25 +47,24 @@ public abstract partial class StateMachine : Node
     /// </summary>
     protected void StateRemove(State key)
     {
-        if (_states.ContainsKey(key))
-        {
-            _states.Remove(key);
-        }
+        _states.Remove(key);
     }
 
     public override void _Process(double delta)
     {
+        //GD.Print(delta, _currentState.ToString());
         // 若状态字典中存在当前状态
-        if (_states.ContainsKey(_currentState))
+        if (_states.TryGetValue(_currentState, out IState value))
         {
+            
             // 检查是否可以切换成其他状态
-            var canToStates = _states[_currentState].GetCanToStates();
+            var canToStates = value.GetCanToStates();
             foreach (var state in canToStates)
             {
                 // 若条件成立，进行状态切换
                 if (state.Value.Invoke())
                 {
-                    _states[_currentState].OnExit(_owner);
+                    value.OnExit(_owner);
                     _currentState = state.Key;
                     _states[_currentState].OnEnter(_owner);
                     break;

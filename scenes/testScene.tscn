@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dlxd1shr8ja46"]
+[gd_scene load_steps=9 format=3 uid="uid://dlxd1shr8ja46"]
 
 [ext_resource type="Script" path="res://framework/runtime/units/PlayerNode.cs" id="1_33jun"]
-[ext_resource type="Texture2D" uid="uid://wbdkftfccw1c" path="res://icon.svg" id="2_tlwvd"]
-[ext_resource type="Script" path="res://scripts/machines/PlayerStateMachine.cs" id="3_mb4jt"]
+[ext_resource type="Texture2D" uid="uid://c55ck5hahaajk" path="res://icon.svg" id="2_tlwvd"]
+[ext_resource type="Script" path="res://framework/states/StateMachine.cs" id="3_g180a"]
 [ext_resource type="Script" path="res://framework/runtime/managers/MessageManager.cs" id="3_p1fon"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerIdleState.cs" id="4_cmxj0"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerMoveState.cs" id="5_8ackv"]
 [ext_resource type="Script" path="res://framework/runtime/managers/InputManager.cs" id="5_v3ud8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_txngk"]
@@ -24,7 +26,14 @@ texture = ExtResource("2_tlwvd")
 shape = SubResource("CircleShape2D_txngk")
 
 [node name="StateMachine" type="Node" parent="Player"]
-script = ExtResource("3_mb4jt")
+script = ExtResource("3_g180a")
+
+[node name="PlayerIdle" type="Node" parent="Player/StateMachine"]
+script = ExtResource("4_cmxj0")
+
+[node name="PlayerMove" type="Node" parent="Player/StateMachine"]
+script = ExtResource("5_8ackv")
+State = 102
 
 [node name="MessageManager" type="Node" parent="."]
 script = ExtResource("3_p1fon")

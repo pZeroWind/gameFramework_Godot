@@ -6,25 +6,23 @@ namespace Framework;
 
 public interface ITValue
 {
+    void Val(Variant value);
 
-    void SetValue<T>(T value);
-
-    T GetValue<T>();
+    T As<T>();
 }
 
-public class TValue<T> : ITValue
+public class TValue : ITValue
 {
-    private T _value;
+    private Variant _value;
 
-    public S GetValue<S>()
+    public T As<[MustBeVariant] T>()
     {
-        if (_value is S v) return v;
-        return default;
+        return _value.As<T>();
     }
 
-    public void SetValue<S>(S value)
+    public void Val(Variant value)
     {
-        if (value is T v) _value = v;
+        _value = value;
     }
 }
 
@@ -34,6 +32,18 @@ public sealed class PropertyManager
 
     public Dictionary<string, ITValue> GetValues() => _properties;
 
+    /// <summary>
+    /// 索引器
+    /// </summary>
+    public ITValue this[string key]
+    {
+        get
+        {
+            if (!_properties.ContainsKey(key))
+                _properties.Add(key, new TValue());
+            return _properties[key];
+        }
+    }
 
     /// <summary>
     /// 获取属性
@@ -42,7 +52,7 @@ public sealed class PropertyManager
     {
         if (_properties.ContainsKey(key))
         {
-            return _properties[key].GetValue<T>();
+            return _properties[key].As<T>();
         }
         return default;
     }
@@ -50,13 +60,13 @@ public sealed class PropertyManager
     /// <summary>
     /// 设置属性
     /// </summary>
-    public void Set<T>(string key, T value)
+    public void Set(string key, Variant value)
     {
         if (!_properties.ContainsKey(key))
         {
-            _properties.Add(key, new TValue<T>());
+            _properties.Add(key, new TValue());
         }
-        _properties[key].SetValue(value);
+        _properties[key].Val(value);
     }
 
     internal void Set<T>(string maxHP, Variant variant)

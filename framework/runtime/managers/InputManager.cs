@@ -32,7 +32,7 @@ public partial class InputManager : SingletonNode<InputManager>
             return;
         }
         InputMove();
-        Attack = Input.IsActionJustPressed("atk");
+        Attack = Input.IsActionJustPressed("attack");
         Skill = Input.IsActionJustPressed("skill");
         Dodge = Input.IsActionJustPressed("dodge");
         Ultimate = Input.IsActionJustPressed("ultimate");

@@ -55,21 +55,25 @@ public interface IState
 /// <summary>
 /// 状态抽象实体
 /// </summary>
-public abstract class StateObject : IState
+public abstract partial class StateNode : Node, IState
 {
 	private readonly Dictionary<State, Func<bool>> _canToState = new();
 
 	public Dictionary<State, Func<bool>> GetCanToStates() => _canToState;
 
+	[Export]
+	public State State { get; set; } = State.Idle;
+	
 	/// <summary>
 	/// 状态构建时
 	/// </summary>
 	protected abstract void OnInitialize();
 
-	public StateObject()
-	{
-		OnInitialize();
-	}
+    public override void _Ready()
+    {
+        OnInitialize();
+    }
+    
 
 	public virtual void OnEnter(UnitNode node) { }
 

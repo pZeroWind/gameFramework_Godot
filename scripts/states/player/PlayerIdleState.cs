@@ -3,7 +3,7 @@ using Godot;
 
 namespace GameApp;
 
-public class PlayerIdleState : StateObject
+public partial class PlayerIdleState : StateNode
 {
     private InputManager _inpMgr;
 
@@ -13,7 +13,7 @@ public class PlayerIdleState : StateObject
     {
         _inpMgr = InputManager.Instance;
         AddCanToState(State.Move, () => _inpMgr.Move != Vector2.Zero);
-        AddCanToState(State.Attack, () => _inpMgr.Attack);
+        //AddCanToState(State.Attack, () => _inpMgr.Attack);
         
         _tree.SetRoot<SequenceNode>()
             .AddChildren(
