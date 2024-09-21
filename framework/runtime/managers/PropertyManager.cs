@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace Framework;
@@ -26,9 +27,14 @@ public class TValue : ITValue
     }
 }
 
-public sealed class PropertyManager
+public sealed class PropertyManager(UnitNode unit = null)
 {
     private readonly Dictionary<string, ITValue> _properties = [];
+    
+    /// <summary>
+    /// 绑定单位
+    /// </summary>
+    private UnitNode _owner = unit;
 
     public Dictionary<string, ITValue> GetValues() => _properties;
 
@@ -50,11 +56,80 @@ public sealed class PropertyManager
     /// </summary>
     public T Get<T>(string key)
     {
-        if (_properties.ContainsKey(key))
+        if (_properties.TryGetValue(key, out ITValue value))
         {
-            return _properties[key].As<T>();
+            return value.As<T>();
         }
         return default;
+    }
+
+    /// <summary>
+    /// 获取属性 - 限定float
+    /// </summary>
+    public float GetFloat(string key)
+    {
+        if (_properties.TryGetValue(key, out ITValue value))
+        {
+            float result = 0f;
+            result += GetSpecialProperty(key);
+            result += value.As<float>();
+            return result;
+        }
+        return 0f;
+    }
+
+    /// <summary>
+    /// 获取属性 - 限定int
+    /// </summary>
+    public int GetInt(string key)
+    {
+        if (_properties.TryGetValue(key, out ITValue value))
+        {
+            return value.As<int>();
+        }
+        return 0;
+    }
+
+    /// <summary>
+    /// 获取属性 - 限定bool
+    /// </summary>
+    public bool GetBool(string key)
+    {
+        if (_properties.TryGetValue(key, out ITValue value))
+        {
+            return value.As<bool>();
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 获取属性限定double
+    /// </summary>
+    public double GetDouble(string key)
+    {
+        if (_properties.TryGetValue(key, out ITValue value))
+        {
+            return value.As<double>();
+        }
+        return 0d;
+    }
+
+    /// <summary>
+    /// 添加特殊属性值
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private int GetSpecialProperty(string key){
+        int result = 0;
+        switch (key){
+            case UnitPropertyName.MaxHP:
+                result += _owner.BuffMgr
+                    .GetBuff<NumericBuff>()
+                    .Where(buff => buff.PropertyName == key)
+                    .Sum(buff => buff.Value);
+                break;
+        }
+        return result;
     }
 
     /// <summary>
@@ -67,10 +142,5 @@ public sealed class PropertyManager
             _properties.Add(key, new TValue());
         }
         _properties[key].Val(value);
-    }
-
-    internal void Set<T>(string maxHP, Variant variant)
-    {
-        throw new NotImplementedException();
     }
 }

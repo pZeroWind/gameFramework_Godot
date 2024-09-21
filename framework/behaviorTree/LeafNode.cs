@@ -2,5 +2,5 @@ namespace Framework;
 
 public abstract class LeafNode : BehaviorNode
 {
-    protected override bool EnableChildren => false;
+    protected override bool EnableAdddChild => false;
 }

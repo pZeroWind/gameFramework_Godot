@@ -20,6 +20,16 @@ public interface IJsonSerializable
 public static class JsonHelper
 {
     /// <summary>
+    /// 读取Json资源
+    /// </summary>
+    /// <param name="pathName"></param>
+    /// <returns></returns>
+    public static Dictionary LoadJson(string pathName)
+    {
+        return ResourceLoader.Load<Json>($"res://data/{pathName}.json").Data.AsGodotDictionary();
+    }
+
+    /// <summary>
     /// 读取Json文件
     /// </summary>
     public static string ReadJsonFile(string pathName)
@@ -36,13 +46,13 @@ public static class JsonHelper
         // // 将字节数组转换为字符串，文件编码为 UTF-8
         // return Encoding.UTF8.GetString(bytes, 0, bytesRead);
         //File file = new File();
-        if (!DirAccess.DirExistsAbsolute("res://data")) DirAccess.MakeDirAbsolute("res://data");
-        if (!Godot.FileAccess.FileExists($"res://data/{pathName}.json"))
+        if (!DirAccess.DirExistsAbsolute("user://data")) DirAccess.MakeDirAbsolute("user://data");
+        if (!Godot.FileAccess.FileExists($"user://data/{pathName}.json"))
         {
-            using var w = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
+            using var w = Godot.FileAccess.Open($"user://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
             w.StoreString("{}");
         }
-        using var fl = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Read);
+        using var fl = Godot.FileAccess.Open($"user://data/{pathName}.json", Godot.FileAccess.ModeFlags.Read);
         return fl.GetAsText();
     }
 
@@ -51,7 +61,7 @@ public static class JsonHelper
     /// </summary>
     public static void WriteJsonFile(string pathName, string content)
     {
-        
+
 
         // if (!Directory.Exists("user://data")) Directory.CreateDirectory("user://data");
         // using FileStream fs = new($"user://data/{pathName}.json", FileMode.OpenOrCreate, System.IO.FileAccess.Write);
@@ -60,9 +70,9 @@ public static class JsonHelper
         // byte[] bytes = Encoding.UTF8.GetBytes(content);
         // // 异步读取文件内容到字节数组
         // bufferedStream.Write(bytes, 0, bytes.Length);
-        if (!DirAccess.DirExistsAbsolute("res://data")) DirAccess.MakeDirAbsolute("res://data");
+        if (!DirAccess.DirExistsAbsolute("user://data")) DirAccess.MakeDirAbsolute("user://data");
         //if (!Godot.FileAccess.FileExists($"user://data/{pathName}.json")) Godot.FileAccess.new();
-        using var fl = Godot.FileAccess.Open($"res://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
+        using var fl = Godot.FileAccess.Open($"user://data/{pathName}.json", Godot.FileAccess.ModeFlags.Write);
         fl.StoreString(content);
     }
 

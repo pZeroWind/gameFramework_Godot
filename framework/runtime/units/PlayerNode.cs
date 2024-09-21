@@ -14,30 +14,31 @@ public partial class PlayerNode : UnitNode, IJsonSerializable
 
     public void Deserialize()
     {
-        string json = JsonHelper.ReadJsonFile(FileName);
-        var data = json.Deserialize();
+#region  初始化角色
+        var json = JsonHelper.LoadJson($"characters/{FileName}");
 
         // 生命值设置
         // Properties.Set<float>(UnitPropertyName.MaxHP, data[UnitPropertyName.MaxHP].As<float>());
         // Properties.Set<float>(UnitPropertyName.HP, data[UnitPropertyName.HP].As<float>());
-        Properties[UnitPropertyName.MaxHP].Val(data[UnitPropertyName.MaxHP]);
-        Properties[UnitPropertyName.HP].Val(data[UnitPropertyName.HP]);
+        Properties[UnitPropertyName.MaxHP].Val(json[UnitPropertyName.MaxHP]);
+        Properties[UnitPropertyName.HP].Val(Properties[UnitPropertyName.MaxHP].As<float>());
 
         // 法力值设置
         // Properties.Set<float>(UnitPropertyName.MaxMP, data[UnitPropertyName.MaxHP].As<float>());
         // Properties.Set<float>(UnitPropertyName.MP, data[UnitPropertyName.MP].As<float>());
-        Properties[UnitPropertyName.MaxMP].Val(data[UnitPropertyName.MaxMP]);
-        Properties[UnitPropertyName.MP].Val(data[UnitPropertyName.MP]);
+        Properties[UnitPropertyName.MaxMP].Val(json[UnitPropertyName.MaxMP]);
+        Properties[UnitPropertyName.MP].Val(Properties[UnitPropertyName.MaxMP].As<float>());
 
         // 体力值设置
         // Properties.Set<float>(UnitPropertyName.MaxSP, data[UnitPropertyName.MaxSP].As<float>());
         // Properties.Set<float>(UnitPropertyName.SP, data[UnitPropertyName.SP].As<float>());
-        Properties[UnitPropertyName.MaxSP].Val(data[UnitPropertyName.MaxSP]);
-        Properties[UnitPropertyName.SP].Val(data[UnitPropertyName.SP]);
+        Properties[UnitPropertyName.MaxSP].Val(json[UnitPropertyName.MaxSP]);
+        Properties[UnitPropertyName.SP].Val(Properties[UnitPropertyName.MaxSP].As<float>());
 
         // 速度设置
         // Properties.Set<float>(UnitPropertyName.Speed, data[UnitPropertyName.Speed].As<float>());
-        Properties[UnitPropertyName.Speed].Val(data[UnitPropertyName.Speed]);
+        Properties[UnitPropertyName.Speed].Val(json[UnitPropertyName.Speed]);
+#endregion
     }
 
     public void Serialize()
@@ -59,17 +60,12 @@ public partial class PlayerNode : UnitNode, IJsonSerializable
         //     .Serialize();
 
         string json = dict
-            // 生命值保存
+            // 当前生命值保存
             .SetValue(UnitPropertyName.MaxHP, Properties[UnitPropertyName.MaxHP].As<float>())
-            .SetValue(UnitPropertyName.HP, Properties[UnitPropertyName.MaxHP].As<float>())
-            // 法力值保存
-            .SetValue(UnitPropertyName.MaxMP, Properties[UnitPropertyName.MaxMP].As<float>())
+            // 当前法力值保存
             .SetValue(UnitPropertyName.MP, Properties[UnitPropertyName.MP].As<float>())
-            // 体力值保存
-            .SetValue(UnitPropertyName.MaxSP, Properties[UnitPropertyName.MaxSP].As<float>())
+            // 当前体力值保存
             .SetValue(UnitPropertyName.SP, Properties[UnitPropertyName.SP].As<float>())
-            // 速度保存
-            .SetValue(UnitPropertyName.Speed, Properties[UnitPropertyName.Speed].As<float>())
             .Serialize();
         
         JsonHelper.WriteJsonFile(UnitName, json);

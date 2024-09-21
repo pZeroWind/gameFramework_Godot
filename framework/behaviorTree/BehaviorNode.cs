@@ -15,7 +15,7 @@ public abstract class BehaviorNode
 
     private BehaviorNode[] _children;
 
-    protected abstract bool EnableChildren { get; }
+    protected virtual bool EnableAdddChild { get; }
 
     public static BehaviorNode CreateNode<T>() where T : BehaviorNode, new() => new T();
 
@@ -24,7 +24,7 @@ public abstract class BehaviorNode
     /// </summary>
     public BehaviorNode AddChildren(params BehaviorNode[] children)
     {
-        if (!EnableChildren) return this;
+        if (!EnableAdddChild) return this;
         _children = children;
         foreach (var child in children)
             child._parent = this;
