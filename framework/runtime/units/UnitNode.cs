@@ -47,10 +47,18 @@ public static class UnitPropertyName
 
 public abstract partial class UnitNode : CharacterBody2D
 {
-    public PropertyManager Properties { get; } = new();
+    public PropertyManager Properties { get; }
+
+    public BuffManager BuffMgr { get; }
 
     [Export]
     public string UnitName { get; set; } = "default";
+
+    public UnitNode()
+    {
+        Properties = new PropertyManager(this);
+        BuffMgr = new BuffManager(this);
+    }
 
     public override void _Ready()
     {
@@ -58,5 +66,8 @@ public abstract partial class UnitNode : CharacterBody2D
         Properties[UnitPropertyName.TimeScale].Val(1f);
     }
 
-
+    public override void _Process(double delta)
+    {
+        BuffMgr.OnUpdate(delta);
+    }
 }

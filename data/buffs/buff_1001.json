@@ -1,0 +1,7 @@
+{
+    "BuffID": 1001,
+    "BuffName": "测试最大生命值提升Buff",
+    "EnableLayer": false,
+    "Value": 50,
+    "PropertyName": "MaxHP"
+}

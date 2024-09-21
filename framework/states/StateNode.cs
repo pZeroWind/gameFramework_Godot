@@ -43,8 +43,8 @@ public interface IState
 	/// <summary>
 	/// 执行状态时调用
 	/// </summary>
-	/// <param name="fTick"></param>
-	void OnExecute(UnitNode node, double fTick);
+	/// <param name="tick"></param>
+	void OnExecute(UnitNode node, double tick);
 
 	/// <summary>
 	/// 退出状态时调用
@@ -59,7 +59,14 @@ public abstract partial class StateNode : Node, IState
 {
 	private readonly Dictionary<State, Func<bool>> _canToState = new();
 
+	private BehaviorTree _tree;
+
 	public Dictionary<State, Func<bool>> GetCanToStates() => _canToState;
+
+	protected BehaviorTree BehaviorTree => _tree;
+	
+	[Export]
+	public bool EnableBehaviorTree { get; set; } = false;
 
 	[Export]
 	public State State { get; set; } = State.Idle;
@@ -71,13 +78,17 @@ public abstract partial class StateNode : Node, IState
 
     public override void _Ready()
     {
+		if(EnableBehaviorTree) _tree = new BehaviorTree();
         OnInitialize();
     }
     
 
 	public virtual void OnEnter(UnitNode node) { }
 
-	public abstract void OnExecute(UnitNode node, double fTick);
+	public virtual void OnExecute(UnitNode node, double tick)
+	{	
+		if(EnableBehaviorTree) _tree.OnExecute(tick);
+	}
 
 	public virtual void OnExit(UnitNode node) { }
 

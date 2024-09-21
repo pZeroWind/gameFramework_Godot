@@ -4,5 +4,5 @@ namespace Framework;
 
 public abstract class CompositeNode : BehaviorNode
 {
-    protected override bool EnableChildren => true;
+    protected override bool EnableAdddChild => true;
 }
