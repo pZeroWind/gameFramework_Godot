@@ -35,5 +35,5 @@ public abstract class BehaviorNode
 
     public BehaviorNode[] Children => _children;
 
-    public abstract NodeState OnExecute(double fTick, BehaviorTree tree);
+    public abstract NodeState OnExecute(double tick, BehaviorTree tree);
 }

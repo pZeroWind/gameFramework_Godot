@@ -3,7 +3,7 @@ using System.Text;
 using Godot;
 using Godot.Collections;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 /// <summary>
 /// 可序列化为Json

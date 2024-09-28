@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 public static class ObjectHelper
 {

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Framework;
+namespace Framework.Runtime;
 
-public class UnitManager : Singleton<UnitManager>
+public class UnitManager
 {
     private readonly Dictionary<string, List<UnitNode>> Units = [];
 

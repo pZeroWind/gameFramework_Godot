@@ -1,23 +1,33 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 
-public class BuffManager(UnitNode unit)
+public class BuffManager
 {
     private readonly List<BaseBuff> _buffs = [];
 
-    private readonly UnitNode _owner = unit;
+    private readonly UnitNode _owner;
+
+    public BuffManager(Node node)
+    {
+        if (node is UnitNode u)
+        {
+            _owner = u;
+        }
+    }
 
     /// <summary>
     /// 添加Buff
     /// </summary>
     public void AddBuff<T>(UnitNode caster, int buffID) where T : BaseBuff, new()
-    {   
+    {
+        if (_owner is null) return; 
         // 检查Buff是否已经存在
         var buff = _buffs.Where(buff => buff.BuffID == buffID && buff.Caster == caster).FirstOrDefault();
         if (buff != null && buff.EnableLayer)
-        {   
+        {
             // 若已存在且允许层数 Buff层数+1
             buff.Layer += 1;
             return;

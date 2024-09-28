@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 
-public partial class InputManager : SingletonNode<InputManager>
+[SingletonNode]
+public partial class InputManager : Node
 {
     //private Dictionary<string, > _inputDict;
 

@@ -1,4 +1,4 @@
-namespace Framework;
+namespace Framework.Runtime;
 
 public abstract class Singleton<T> where T : class, new()
 {

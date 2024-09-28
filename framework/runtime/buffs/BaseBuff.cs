@@ -1,6 +1,6 @@
 using Godot.Collections;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 public abstract class BaseBuff
 {

@@ -1,10 +1,10 @@
 using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 public class GlobalManager : Singleton<GlobalManager>, IJsonSerializable
 {
-    public readonly PropertyManager Properties;
+    public readonly PropertyManager PropsMgr;
     
     public string FileName => "globalConfig";
 
@@ -16,7 +16,7 @@ public class GlobalManager : Singleton<GlobalManager>, IJsonSerializable
 
     public GlobalManager()
     {
-        Properties = new();
+        PropsMgr = new();
         Deserialize();
     }
 

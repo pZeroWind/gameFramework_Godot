@@ -1,3 +1,4 @@
+using Framework.Runtime;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -71,7 +72,7 @@ public partial class StateMachine : Node
                 }
             }
             // 获取时间倍率属性
-            float timeScale = _owner.Properties.Get<float>(UnitPropertyName.TimeScale);
+            float timeScale = _owner.PropsMgr.Get<float>(UnitPropertyName.TimeScale);
             // 执行当前状态
             _states[_currentState].OnExecute(_owner, delta * timeScale);
         }

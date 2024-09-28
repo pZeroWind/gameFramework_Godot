@@ -1,42 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlxd1shr8ja46"]
+[gd_scene load_steps=4 format=3 uid="uid://dlxd1shr8ja46"]
 
-[ext_resource type="Script" path="res://framework/runtime/units/PlayerNode.cs" id="1_33jun"]
-[ext_resource type="Texture2D" uid="uid://c55ck5hahaajk" path="res://icon.svg" id="2_tlwvd"]
-[ext_resource type="Script" path="res://framework/states/StateMachine.cs" id="3_g180a"]
-[ext_resource type="Script" path="res://framework/runtime/managers/MessageManager.cs" id="3_p1fon"]
-[ext_resource type="Script" path="res://scripts/states/player/PlayerIdleState.cs" id="4_cmxj0"]
-[ext_resource type="Script" path="res://scripts/states/player/PlayerMoveState.cs" id="5_8ackv"]
-[ext_resource type="Script" path="res://framework/runtime/managers/InputManager.cs" id="5_v3ud8"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_txngk"]
-radius = 60.0
+[ext_resource type="Script" path="res://scripts/root/TestRootNode.cs" id="1_0cpag"]
+[ext_resource type="Script" path="res://framework/runtime/managerNodes/InputManager.cs" id="2_2374d"]
+[ext_resource type="Script" path="res://framework/runtime/managerNodes/MessageManager.cs" id="2_d7lc2"]
 
 [node name="TestScene" type="Node2D"]
+script = ExtResource("1_0cpag")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 
-[node name="Player" type="CharacterBody2D" parent="."]
-script = ExtResource("1_33jun")
-UnitName = "player"
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("2_tlwvd")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CircleShape2D_txngk")
-
-[node name="StateMachine" type="Node" parent="Player"]
-script = ExtResource("3_g180a")
-
-[node name="PlayerIdle" type="Node" parent="Player/StateMachine"]
-script = ExtResource("4_cmxj0")
-
-[node name="PlayerMove" type="Node" parent="Player/StateMachine"]
-script = ExtResource("5_8ackv")
-State = 102
-
 [node name="MessageManager" type="Node" parent="."]
-script = ExtResource("3_p1fon")
+script = ExtResource("2_d7lc2")
 
 [node name="InputManager" type="Node" parent="."]
-script = ExtResource("5_v3ud8")
+script = ExtResource("2_2374d")

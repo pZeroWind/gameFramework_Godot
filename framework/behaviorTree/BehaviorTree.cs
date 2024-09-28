@@ -22,9 +22,9 @@ public class BehaviorTree
     /// <summary>
     /// 运行行为树
     /// </summary>
-    public void OnExecute(double fTick)
+    public void OnExecute(double tick)
     {
         if (_enable)
-            _root.OnExecute(fTick ,this);
+            _root.OnExecute(tick ,this);
     }
 }

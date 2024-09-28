@@ -5,13 +5,13 @@ namespace Framework;
 /// </summary>
 public class SelectorNode : CompositeNode
 {
-    public override NodeState OnExecute(double fTick, BehaviorTree tree)
+    public override NodeState OnExecute(double tick, BehaviorTree tree)
     {
         bool runing = false;
         bool failed = true;
         foreach (var node in Children)
         {
-            var state = node.OnExecute(fTick, tree);
+            var state = node.OnExecute(tick, tree);
             if (state != NodeState.Failed)
             {
                 failed = false;

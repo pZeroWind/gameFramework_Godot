@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 public class MessageData
 {
@@ -11,7 +11,8 @@ public class MessageData
     public ITValue Value;
 }
 
-public partial class MessageManager : SingletonNode<MessageManager>
+[SingletonNode]
+public partial class MessageManager : Node
 {
     private readonly Dictionary<string, Action<MessageData>> _events = [];
 
@@ -55,7 +56,7 @@ public partial class MessageManager : SingletonNode<MessageManager>
         if(_messages.Count > 0)
         {
             var msg = _messages.Dequeue();
-            if(_events.ContainsKey(msg.Name)) _events[msg.Name].Invoke(msg);
+            if(_events.TryGetValue(msg.Name, out var value)) value.Invoke(msg);
         }
     }
 }

@@ -5,13 +5,13 @@ namespace Framework;
 /// </summary>
 public class SequenceNode : CompositeNode
 {
-    public override NodeState OnExecute(double fTick, BehaviorTree tree)
+    public override NodeState OnExecute(double tick, BehaviorTree tree)
     {
         bool runing = false;
         bool success = true;
         foreach (var node in Children)
         {
-            var state = node.OnExecute(fTick, tree);
+            var state = node.OnExecute(tick, tree);
             if (state != NodeState.Success)
             {
                 success = false;

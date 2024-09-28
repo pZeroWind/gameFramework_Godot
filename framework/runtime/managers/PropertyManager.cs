@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 
 public interface ITValue
 {
@@ -27,16 +27,24 @@ public class TValue : ITValue
     }
 }
 
-public sealed class PropertyManager(UnitNode unit = null)
+public sealed class PropertyManager
 {
     private readonly Dictionary<string, ITValue> _properties = [];
-    
+
     /// <summary>
     /// 绑定单位
     /// </summary>
-    private UnitNode _owner = unit;
+    private readonly UnitNode _owner;
 
     public Dictionary<string, ITValue> GetValues() => _properties;
+
+    public PropertyManager(Node node = null)
+    {
+        if (node is UnitNode u)
+        {
+            _owner = u;
+        }
+    }
 
     /// <summary>
     /// 索引器
@@ -119,9 +127,12 @@ public sealed class PropertyManager(UnitNode unit = null)
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    private int GetSpecialProperty(string key){
+    private int GetSpecialProperty(string key)
+    {
+        if (_owner is null) return 0;
         int result = 0;
-        switch (key){
+        switch (key)
+        {
             case UnitPropertyName.MaxHP:
                 result += _owner.BuffMgr
                     .GetBuff<NumericBuff>()

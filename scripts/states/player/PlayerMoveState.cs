@@ -1,23 +1,24 @@
 using Framework;
+using Framework.Runtime;
 using Godot;
 
 namespace GameApp;
 
 public partial class PlayerMoveState : StateNode
 {
-    private InputManager _inpMgr;
+    [UseInject]
+    public InputManager InpMgr { get; set; }
 
-    private GlobalManager _globalMgr;
+    [UseInject]
+    public GlobalManager GlobalMgr { get; set; }
 
     protected override void OnInitialize()
     {
-        _inpMgr = InputManager.Instance;
-        _globalMgr = GlobalManager.Instance;
-        AddCanToState(State.Idle, () => _inpMgr.Move == Vector2.Zero);
+        AddCanToState(State.Idle, () => InpMgr.Move == Vector2.Zero);
     }
 
     public override void OnExecute(UnitNode node, double fTick)
     {
-        node.MoveAndCollide(_inpMgr.Move * node.Properties[UnitPropertyName.Speed].As<float>() * _globalMgr.GlobalTimeScale);
+        node.MoveAndCollide(InpMgr.Move * node.PropsMgr[UnitPropertyName.Speed].As<float>() * GlobalMgr.GlobalTimeScale);
     }
 }

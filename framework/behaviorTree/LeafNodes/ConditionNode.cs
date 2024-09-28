@@ -8,10 +8,10 @@ public abstract class ConditionNode : LeafNode
     /// <summary>
     /// 判断条件
     /// </summary>
-    public abstract bool Condition(double fTick, BehaviorTree tree);
+    public abstract bool Condition(double tick, BehaviorTree tree);
 
-    public override NodeState OnExecute(double fTick, BehaviorTree tree)
+    public override NodeState OnExecute(double tick, BehaviorTree tree)
     {
-        return Condition(fTick, tree) ? NodeState.Success : NodeState.Failed;
+        return Condition(tick, tree) ? NodeState.Success : NodeState.Failed;
     }
 }

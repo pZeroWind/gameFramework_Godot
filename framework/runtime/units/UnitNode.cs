@@ -1,7 +1,9 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Godot;
 
-namespace Framework;
+namespace Framework.Runtime;
 public static class UnitPropertyName
 {
     /// <summary>
@@ -47,27 +49,66 @@ public static class UnitPropertyName
 
 public abstract partial class UnitNode : CharacterBody2D
 {
-    public PropertyManager Properties { get; }
+    private readonly CoroutineCore _coroutineCore = new();
 
-    public BuffManager BuffMgr { get; }
+    private FrameworkRootNode _root;
+
+    [UseInject]
+    public UnitManager UnitMgr { get; set; }
+
+    [UseInject]
+    public PropertyManager PropsMgr { get; set; }
+
+    [UseInject]
+    public BuffManager BuffMgr { get; set; }
 
     [Export]
     public string UnitName { get; set; } = "default";
 
-    public UnitNode()
+    /// <summary>
+    /// 开启协程
+    /// </summary>
+    public void StartCoroutine(IEnumerator routine)
     {
-        Properties = new PropertyManager(this);
-        BuffMgr = new BuffManager(this);
+        _coroutineCore.StartCoroutine(routine);
+    }
+
+    /// <summary>
+    /// 开启协程
+    /// </summary>
+    public void StartCoroutine(Func<IEnumerator> routine)
+    {
+        _coroutineCore.StartCoroutine(routine.Invoke());
+    }
+
+    public override void _EnterTree()
+    {
+        _root = GetParent<FrameworkRootNode>();
+        Queue<Node> nodes = [];
+        nodes.Enqueue(this);
+        while (nodes.Count > 0)
+        {
+            var curNode = nodes.Dequeue();
+            _root.LoadNode(curNode);
+            var childrenArr = curNode.GetChildren();
+            foreach (var child in childrenArr) nodes.Enqueue(child);
+        }
     }
 
     public override void _Ready()
     {
-        UnitManager.Instance.AddUnit(this);
-        Properties[UnitPropertyName.TimeScale].Val(1f);
+        UnitMgr.AddUnit(this);
+        PropsMgr[UnitPropertyName.TimeScale].Val(1f);
     }
 
     public override void _Process(double delta)
     {
+        _coroutineCore.OnUpdateCoroutine(delta);
         BuffMgr.OnUpdate(delta);
+    }
+
+    public override void _ExitTree()
+    {
+        _root.RemoveNode(this);
     }
 }

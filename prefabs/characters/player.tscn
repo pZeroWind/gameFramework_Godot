@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4lyh8qtrh4e6"]
+
+[ext_resource type="Script" path="res://framework/runtime/units/PlayerNode.cs" id="1_r1bc2"]
+[ext_resource type="Texture2D" uid="uid://c55ck5hahaajk" path="res://icon.svg" id="2_4215x"]
+[ext_resource type="Script" path="res://framework/states/StateMachine.cs" id="3_6fjav"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerIdleState.cs" id="4_qmr2t"]
+[ext_resource type="Script" path="res://scripts/states/player/PlayerMoveState.cs" id="5_w5a8u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_txngk"]
+radius = 60.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_r1bc2")
+UnitName = "player"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_4215x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_txngk")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_6fjav")
+
+[node name="PlayerIdle" type="Node" parent="StateMachine"]
+script = ExtResource("4_qmr2t")
+
+[node name="PlayerMove" type="Node" parent="StateMachine"]
+script = ExtResource("5_w5a8u")
+State = 102

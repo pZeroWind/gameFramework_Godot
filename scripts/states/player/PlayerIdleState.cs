@@ -1,16 +1,17 @@
 using Framework;
+using Framework.Runtime;
 using Godot;
 
 namespace GameApp;
 
 public partial class PlayerIdleState : StateNode
 {
-    private InputManager _inpMgr;
+    [UseInject]
+    public InputManager InpMgr { get; set; }
 
     protected override void OnInitialize()
     {
-        _inpMgr = InputManager.Instance;
-        AddCanToState(State.Move, () => _inpMgr.Move != Vector2.Zero);
+        AddCanToState(State.Move, () => InpMgr.Move != Vector2.Zero);
         //AddCanToState(State.Attack, () => _inpMgr.Attack);
     }
 
